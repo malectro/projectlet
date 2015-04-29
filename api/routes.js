@@ -1,10 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var models = require('models');
+var models = require('../models');
 
 
-var api = express();
+var app = express();
 
 app.use(bodyParser.json());
 
@@ -49,5 +49,5 @@ app.get('/projects/:id/people', (req, res) => {
 });
 
 
-module.exports = api;
+module.exports = app;
 

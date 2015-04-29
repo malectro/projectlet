@@ -1,15 +1,15 @@
 var express = require('express');
 
-var api = require('api/routes');
+var models = require('./models');
+var api = require('./api/routes');
 
 
 var app = express();
 
+app.set('port', process.env.PORT || 3001);
 app.use('media', express.static('build'));
 
-
 app.use(api);
-
 
 app.use((req, res, next) => {
   var error = new Error('Not found');
@@ -34,4 +34,10 @@ app.use((error, req, res, next) => {
     error: {},
   });
 })
+
+models.sequelize.sync().then(() => {
+  app.listen(app.get('port'), () => {
+    console.log('App listening on port ' + app.get('port'));
+  });
+});
 
