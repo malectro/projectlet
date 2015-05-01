@@ -77,7 +77,7 @@ _.each(['get', 'post', 'put', 'delete'], function (method) {
   ajax[method] = function (path, data, options) {
     return this.request(_.extend({
       method: method,
-      url: 'http://localhost:3001' + path,
+      url: 'http://projectlet.herokuapp.com' + path,
       data: data,
     }, options));
   };
