@@ -1,7 +1,7 @@
 (function (document) {
 
 var template =
-  '<div id="spaced-projectlet" class="<%- d.className %>" style="position: fixed; top: 0; left: 0; background: rgba(255, 255, 255, 0.8);">' +
+  '<div id="spaced-projectlet" class="<%- d.className %>" style="position: fixed; top: 0; left: 0; background: rgba(255, 255, 255, 0.8); z-index: 10000000">' +
     '<div class="spaced-projectlet-title">Tag this project with a tweeter.</div>' +
     '<form>' +
       '<input type="text" value="<%- d.handle %>" placeholder="@twitterhandle" />' +
