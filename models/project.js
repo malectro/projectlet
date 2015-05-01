@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
 
-  var Project = sequelize.define('Project', {
+  var Project = sequelize.define('project', {
     uri: {type: DataTypes.STRING, unique: true},
   }, {
     classMethods: {

@@ -28,6 +28,7 @@ var Projectlet = Backbone.View.extend({
       this.setState({
         handles: _.union(this.state.handles, [handle])
       }).render();
+      ajax.post('/people', {projectId: this.state.id, handle: handle});
     },
     'click .spaced-projectlet-close': function () {
       var self = this;
@@ -51,10 +52,46 @@ var Projectlet = Backbone.View.extend({
     _.extend(this.state, attrs);
     return this;
   },
+
+  setData: function (data) {
+    data.handles = _.pluck(data.people, 'handle');
+    this.setState(data).render();
+    return this;
+  },
+});
+
+
+var ajax = {
+  request: function (options) {
+    options = _.extend({
+      contentType: 'application/json',
+      dataType: 'json',
+    }, options);
+    if (options.data) {
+      options.data = JSON.stringify(options.data);
+    }
+    return $.ajax(options);
+  },
+};
+_.each(['get', 'post', 'put', 'delete'], function (method) {
+  ajax[method] = function (path, data, options) {
+    return this.request(_.extend({
+      method: method,
+      url: 'http://localhost:3001' + path,
+      data: data,
+    }, options));
+  };
 });
 
 var projectlet = new Projectlet().render();
 projectlet.$el.appendTo(document.body);
+
+ajax.post('/projects', {
+  uri: location.toString()
+}).then(function (result) {
+  projectlet.setData(result);
+});
+
 
 })(document);
 

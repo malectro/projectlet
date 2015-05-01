@@ -33,17 +33,23 @@ app.route('/projects')
     });
   })
   .post((req, res) => {
-    models.Project.create(req.body).then((project) => {
-      res.json(project);
+    models.Project.find({where: {uri: req.body.uri}, include: [models.Person]}).then((project) => {
+      if (!project) {
+        models.Project.create({uri: req.body.uri}).then((project) => {
+          res.json(project);
+        });
+      } else {
+        res.json(project);
+      }
     });
   });
-app.get('/projects/:id', (req, res) => {
-  models.Project.find(req.params.id).then((project) => {
+app.post('/projects/:id', (req, res) => {
+  models.Project.find({where: {id: req.params.id}}).then((project) => {
     res.json(project);
   });
 });
 app.get('/projects/:id/people', (req, res) => {
-  models.Person.all({where: {project_id: req.params.id}}).then((people) => {
+  models.Person.all({where: {projectId: req.params.id}}).then((people) => {
     res.json(people);
   });
 });
