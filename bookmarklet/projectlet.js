@@ -84,7 +84,7 @@ _.each(['get', 'post', 'put', 'delete'], function (method) {
 });
 
 var projectlet = new Projectlet().render();
-projectlet.$el.appendTo(document.body);
+projectlet.$el.prependTo(document.body);
 
 ajax.post('/projects', {
   uri: location.toString()
