@@ -3,6 +3,7 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
+var zip = require('gulp-zip');
 var through2 = require('through2');
 
 function encodeUri(string) {
@@ -75,6 +76,12 @@ gulp.task('build-lib', function () {
 gulp.task('build-conflate', ['build-js', 'build-lib'], function () {
   return gulp.src(['./dist/lib.min.js', './dist/projectlet.min.js'])
     .pipe(concat('projectlet.bundle.min.js'))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build-extension', function () {
+  return gulp.src('./extension/*')
+    .pipe(zip('extension.zip'))
     .pipe(gulp.dest('./dist'));
 });
 

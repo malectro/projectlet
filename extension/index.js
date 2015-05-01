@@ -25,7 +25,6 @@ var template =
         '<a class="spaced-projectlet-handle" href="twitter.com/<%- handle %>">@<%- handle %></a>' +
       '<% }); %>' +
     '</div>' +
-    '<a class="spaced-projectlet-close">close</a>' +
   '</div>';
 
 var Projectlet = Backbone.View.extend({
