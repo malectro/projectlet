@@ -68,6 +68,7 @@ gulp.task('build-lib', function () {
     './bower_components/jquery/dist/jquery.min.js',
     './bower_components/backbone/backbone.js',
   ]).pipe(concat('lib.min.js'))
+  .pipe(gulp.dest('./extension'))
   .pipe(gulp.dest('./dist'));
 });
 

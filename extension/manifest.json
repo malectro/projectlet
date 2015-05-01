@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Projectlet",
+  "version": "0.0.0",
+  "description": "Allows tagging websites with twitter handles.",
+
+  "browser_action": {
+    "default_icon": {
+      "19": "icon-19.png",
+      "38": "icon-38.png"
+    },
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "activeTab",
+    "http://projectlet.herokuapp.com/"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
