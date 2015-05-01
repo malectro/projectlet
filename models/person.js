@@ -1,8 +1,11 @@
 module.exports = function (sequelize, DataTypes) {
 
   var Person = sequelize.define('person', {
-    handle: {type: DataTypes.STRING, unique: true},
+    handle: {type: DataTypes.STRING},
   }, {
+    indexes: [
+      {fields: ['handle']},
+    ],
     classMethods: {
       associate: function (models) {
         Person.belongsTo(models.Project);
