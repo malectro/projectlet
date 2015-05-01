@@ -5,9 +5,29 @@ var path      = require('path');
 var Sequelize = require('sequelize');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db        = {};
+var sequelize, config;
+
+if (env === 'production') {
+  var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+  config = {
+    database: match[5],
+    username: match[1],
+    password: match[2],
+    port: match[4],
+    host: match[3],
+    dialect: 'postgres',
+    protocol: 'postgres',
+    loggin: false,
+    dialectOptions: {
+      ssl: true,
+    },
+  };
+} else {
+  config = require(__dirname + '/../config/config.json')[env];
+}
+
+sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 fs
   .readdirSync(__dirname)
