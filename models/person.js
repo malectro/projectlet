@@ -2,6 +2,7 @@ module.exports = function (sequelize, DataTypes) {
 
   var Person = sequelize.define('person', {
     handle: {type: DataTypes.STRING},
+    role: {type: DataTypes.STRING},
   }, {
     indexes: [
       {fields: ['handle']},
