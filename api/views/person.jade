@@ -1,0 +1,11 @@
+h1 Projectlet
+h2= handle
+
+div
+  strong Projects
+each project in projects
+  div
+    a(href='/projects/' + project.project.id)= project.project.get('uri')
+    |  &middot; 
+    a(href=project.project.get('uri')) view
+

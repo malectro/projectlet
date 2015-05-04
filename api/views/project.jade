@@ -1,0 +1,11 @@
+h1 Projectlet
+h2= project.get('uri')
+
+div
+  strong Projects
+each person in project.people
+  div
+    a(href='/people/' + person.get('handle'))= person.get('handle')
+    |  &middot; 
+    a(href='twitter.com/' + person.get('handle')) twitter
+
