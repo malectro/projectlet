@@ -7,5 +7,7 @@ each person in project.people
   div
     a(href='/people/' + person.get('handle'))= person.get('handle')
     |  &middot; 
+    span= person.get('role')
+    |  &middot; 
     a(href='twitter.com/' + person.get('handle')) twitter
 

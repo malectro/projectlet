@@ -1,6 +1,6 @@
 (function (document) {
 
-// var HOST = 'localhost:3001';
+//var HOST = 'localhost:3001';
 var HOST = 'projectlet.herokuapp.com';
 
 function getCurrentTabUrl(callback) {
@@ -21,7 +21,9 @@ var template =
   '<div id="spaced-projectlet" class=<%- d.className %>>' +
     '<div class="spaced-projectlet-title">Tag this project with a tweeter.</div>' +
     '<form>' +
-      '<input type="text" value="<%- d.handle %>" placeholder="@twitterhandle" />' +
+      '<input type="text" name="handle" placeholder="@twitterhandle">' +
+      '<input type="text" name="role" placeholder="role">' +
+      '<input type="submit">' +
     '</form>' +
     '<div class="spaced-projectlet-handles">' +
       '<% _.each(d.handles, function (handle) { %>' +
@@ -40,11 +42,12 @@ var Projectlet = Backbone.View.extend({
   events: {
     'submit form': function (event) {
       event.preventDefault();
-      var handle = this.$('input').val();
+      var form = this.$('form')[0];
+      var handle = form.handle.value;
       this.setState({
         handles: _.union(this.state.handles, [handle])
       }).render();
-      ajax.post('/people', {projectId: this.state.id, handle: handle});
+      ajax.post('/people', {projectId: this.state.id, handle: handle, role: form.role.value});
     },
     'click .spaced-projectlet-close': function () {
       var self = this;

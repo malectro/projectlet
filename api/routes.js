@@ -69,7 +69,6 @@ app.get('/projects/:id', (req, res) => {
         res.json(project);
       },
       html: function () {
-        console.log(project);
         res.render('project', {project: project});
       }
     });

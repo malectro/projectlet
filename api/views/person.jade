@@ -7,5 +7,7 @@ each project in projects
   div
     a(href='/projects/' + project.project.id)= project.project.get('uri')
     |  &middot; 
+    span= project.get('role')
+    |  &middot; 
     a(href=project.project.get('uri')) view
 
