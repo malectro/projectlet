@@ -14,10 +14,6 @@ app.use('/media', express.static('./dist'));
 
 app.use(api);
 
-app.get('', (req, res) => {
-  res.send('drag this <a href="' + snippet + '">projectlet</a> to your bookmark bar');
-});
-
 app.use((req, res, next) => {
   var error = new Error('Not found');
   error.status = 404;

@@ -1,5 +1,8 @@
 (function (document) {
 
+// var HOST = 'localhost:3001';
+var HOST = 'projectlet.herokuapp.com';
+
 function getCurrentTabUrl(callback) {
   var queryInfo = {
     active: true,
@@ -22,7 +25,7 @@ var template =
     '</form>' +
     '<div class="spaced-projectlet-handles">' +
       '<% _.each(d.handles, function (handle) { %>' +
-        '<div><a class="spaced-projectlet-handle" href="twitter.com/<%- handle %>">@<%- handle %></a></div>' +
+        '<div><a class="spaced-projectlet-handle" href="' + HOST + '/people/<%- handle %>">@<%- handle %></a></div>' +
       '<% }); %>' +
     '</div>' +
   '</div>';
@@ -90,8 +93,7 @@ _.each(['get', 'post', 'put', 'delete'], function (method) {
   ajax[method] = function (path, data, options) {
     return this.request(_.extend({
       method: method,
-      //url: 'http://localhost:3001' + path,
-      url: 'http://projectlet.herokuapp.com' + path,
+      url: 'http://' + HOST + path,
       data: data,
     }, options));
   };

@@ -16,6 +16,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('', (req, res) => {
+  res.render('index');
+});
+
 app.route('/people')
   .get((req, res) => {
     models.Person.all().then((people) => {
@@ -29,7 +33,7 @@ app.route('/people')
   });
 
 app.get('/people/:handle', (req, res) => {
-  models.Person.all({where: {handle: req.params.handle}, include: [models.Project]}).then((people) => {
+  models.Person.all({where: {handle: req.params.handle}, include: [{model: models.Project, required: true}]}).then((people) => {
     res.format({
       json: function () {
         res.json(people);
