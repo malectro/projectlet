@@ -85,9 +85,15 @@ gulp.task('build-extension', function () {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('watch', function () {
+gulp.task('watch-bookmarklet', function () {
   return gulp.watch('./bookmarklet/*.js', ['build-conflate', 'build-snippet']);
 });
 
-gulp.task('default', ['build-conflate', 'build-snippet', 'watch']);
+gulp.task('watch-extension', function () {
+  return gulp.watch('./extension/*', ['build-extension']);
+});
+
+gulp.task('watch', ['watch-bookmarklet', 'watch-extension']);
+
+gulp.task('default', ['build-conflate', 'build-snippet', 'build-extension', 'watch']);
 
