@@ -26,8 +26,11 @@ var template =
       '<input type="submit">' +
     '</form>' +
     '<div class="spaced-projectlet-handles">' +
-      '<% _.each(d.handles, function (handle) { %>' +
-        '<div><a class="spaced-projectlet-handle" href="http://' + HOST + '/people/<%- handle %>">@<%- handle %></a></div>' +
+      '<% _.each(d.people, function (person) { %>' +
+          '<div>' +
+            '<a class="spaced-projectlet-handle" href="http://' + HOST + '/people/<%- person.handle %>">@<%- person.handle %></a>' +
+            ' &middot; <span><%- person.role %></span>' +
+          '</div>' +
       '<% }); %>' +
     '</div>' +
   '</div>';
@@ -36,7 +39,7 @@ var Projectlet = Backbone.View.extend({
   template: _.template(template, {variable: 'd'}),
 
   state: {
-    handles: [],
+    people: {},
   },
 
   events: {
@@ -44,10 +47,15 @@ var Projectlet = Backbone.View.extend({
       event.preventDefault();
       var form = this.$('form')[0];
       var handle = form.handle.value;
-      this.setState({
-        handles: _.union(this.state.handles, [handle])
-      }).render();
-      ajax.post('/people', {projectId: this.state.id, handle: handle, role: form.role.value});
+      var person = {
+        projectId: this.state.id,
+        handle: handle,
+        role: form.role.value
+      };
+      var people = this.state.people;
+      people[handle] = person;
+      this.setState({people: people}).render();
+      ajax.post('/people', person);
     },
     'click .spaced-projectlet-close': function () {
       var self = this;
@@ -77,11 +85,19 @@ var Projectlet = Backbone.View.extend({
   },
 
   setData: function (data) {
-    data.handles = _.pluck(data.people, 'handle');
+    data.people = _.keyBy(data.people, 'handle');
     this.setState(data).render();
     return this;
   },
 });
+
+_.keyBy = function (collection, property) {
+  var object = {};
+  _.each(collection, function (element) {
+    object[element[property]] = element;
+  });
+  return object;
+};
 
 
 var ajax = {
