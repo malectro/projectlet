@@ -25,7 +25,7 @@ var template =
     '</form>' +
     '<div class="spaced-projectlet-handles">' +
       '<% _.each(d.handles, function (handle) { %>' +
-        '<div><a class="spaced-projectlet-handle" href="' + HOST + '/people/<%- handle %>">@<%- handle %></a></div>' +
+        '<div><a class="spaced-projectlet-handle" href="http://' + HOST + '/people/<%- handle %>">@<%- handle %></a></div>' +
       '<% }); %>' +
     '</div>' +
   '</div>';
@@ -52,6 +52,10 @@ var Projectlet = Backbone.View.extend({
         self.remove();
       });
     },
+    'click a': function (event) {
+      event.preventDefault();
+      chrome.tabs.create({url: event.target.href});
+    }
   },
 
   initialize: function (options) {
